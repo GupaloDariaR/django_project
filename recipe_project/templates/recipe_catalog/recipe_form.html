@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <title>Добавление рецепта</title>
+</head>
+<body>
+    {% include "blocks/header.html" %}
+    <main>
+        <h2>Рецепт</h2>
+        <form method="post">
+            {% csrf_token %}
+
+            {% if not "/delete/" in request.path %}
+                {{ form.as_p }}
+            {% else %}
+                <p>{{ data.name }}</p>
+            {% endif %}
+
+            <input class="item-button" type="submit" value="Отправить">
+        </form>
+
+        <h2>Ингредиенты</h2>
+        <table class="ingredients_table" class="w3-table w3-bordered">
+            <tr>
+                <th class="w3-center">Название</th>
+                <th class="w3-center">Сырой вес</th>
+                <th class="w3-center">Готовый вес</th>
+                <th class="w3-center">Цена</th>
+                
+            </tr>
+            {% for ingredient in ingredients %}
+                <tr>
+                    <td class="w3-center">{{ ingredient.ingredient.name }}</td>
+                    <td class="w3-center">{{ ingredient.raw_weight }}</td>
+                    <td class="w3-center">{{ ingredient.weight }}</td>
+                    <td class="w3-center">{{ ingredient.cost }}</td>
+                    <td class="w3-center"><a href="{% url 'delete_recipe_ingredient' form.instance.id ingredient.id %}" class="item-button">Удалить</a></td>
+                </tr>
+            {% empty %}
+                <tr>
+                    Ингредиентов пока нет.
+                </tr>
+            {% endfor %}
+        </table>
+        {% with data=form.instance %}
+            {% if form.is_valid %}
+                ID новой записи в БД: {{ data.id }}
+                <a class="back-link" href="{% url 'recipe_detail' data.id %}">Назад к рецепту</a>
+                <a href="{% url 'recipe_add' data.id %}">Добавить ингредиент в рецепт</a>
+            {% endif %}
+        {% endwith %}
+    </main>
+    {% include "blocks/footer.html" %}
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <title>Тестовая форма</title>
+</head>
+<body>
+    {% include "blocks/header.html" %}
+    <main>
+        <form>
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Submit">
+        </form>
+        {% if request.GET %}
+        <!-- ...поприветствуем пользователя: -->
+            <h2>Привет, {{ request.GET.first_name }}</h2>
+        {% endif %}
+    </main>
+    {% include "blocks/footer.html" %}
+</body>
+</html>

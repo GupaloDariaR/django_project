@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <title>Редактирование ингредиентов</title>
+</head>
+<body>
+    {% include "blocks/header.html" %}
+    <main>
+        <h2>Ингредиент</h2>
+        <form method="post">
+            {% csrf_token %}
+            
+            {% if not "/delete/" in request.path %}
+                {{ form.as_p }}
+            {% else %}
+                <p>{{ data.name }}</p>
+            {% endif %}
+
+            {{ form.as_p }}
+            <input class="item-button" type="submit" value="Отправить">
+        </form>
+        {% with data=form.instance %}
+            {% if form.is_valid %}
+                ID новой записи в БД: {{ data.id }}
+            {% endif %}
+        {% endwith %}
+    </main>
+    {% include "blocks/footer.html" %}
+</body>
+</html>

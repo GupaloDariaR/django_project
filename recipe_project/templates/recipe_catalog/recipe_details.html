@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <title>Рецепт</title>
+    </head>
+    <body>
+        {% include "blocks/header.html" %}
+
+        <main>
+            <h1 class="w3-text-blue" style="padding-left: 16px;">{{title}}</h1>
+            <div style="padding-left: 16px;">
+                <table>
+                    <tr>
+                        <td>
+                            <h2>Ингредиенты</h2>
+                            <table class="w3-table w3-bordered" style="width: 600px; padding-left: 16px; margin-bottom: 30px;">
+                                <tr class="w3-light-blue">
+                                    <th>Ингредиент</th>
+                                    <th class="w3-center">Сырой вес</th>
+                                    <th class="w3-center">Готовый вес</th>
+                                    <th class="w3-center">Цена</th>
+                                </tr>
+                                {% for ingredient in  ingredients_list%}
+                                <tr><td>{{ingredient}}</td><td class="w3-center">{{ingredient.raw_weight}}</td><td class="w3-center">{{ingredient.weight}}</td><td class="w3-center">{{ingredient.cost}}</td></tr>
+                                {% empty %}
+                                <tr><td>Список ингредиентов пуст..</td></tr>
+                                {% endfor %}
+                            </table>
+                            <table>
+                                <tr>
+                                    <td>
+                                        <p>Вес сырого продукта: {{calc_raw_weight}} гр.</p>
+                                        <p>Вес готового продукта: {{calc_weight}} гр.</p>
+                                        <p>Себестоимость: {{calc_cost}} руб.</p>
+                                    </td>
+                                    <td style="padding-left: 100px; text-align: right;">
+                                        <a href="/save_to_favorite/{{id}}/" class="w3-button w3-light-blue w3-hover-blue" style="border-radius: 10px; padding: 10px; padding-left: 20px; padding-right: 20px;">Сохранить</a>
+                                        <a href="/recipe/{{id}}/edit/" class="w3-button w3-light-blue w3-hover-blue" style="border-radius: 10px; padding: 10px; padding-left: 20px; padding-right: 20px;">Изменить</a>
+                                        <a href="/recipe/{{id}}/delete/" class="w3-button w3-light-blue w3-hover-blue" style="border-radius: 10px; padding: 10px; padding-left: 20px; padding-right: 20px;">Удалить</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td style="padding-left: 100px; padding-right: 100px; vertical-align: top;">
+                            <h2>Рецепт</h2>
+                            <div style="min-height: 100px; width: fit-content; text-align: justify;">
+                                {{description}}
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </main>
+
+        {% include "blocks/footer.html" %}
+    </body> 
+</html>
+
+
+

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <title>Редактирование ингредиентов</title>
+</head>
+<body>
+    {% include "blocks/header.html" %}
+    <main>
+        <h1>Ингредиенты</h1>
+        <!-- <ul class="ingredient">
+                {% for ingredient in ingredient_list %}
+                <li class="ingredient__item">
+                    <a class="ingredient__item-link" href="{% url 'ingredient_edit' ingredient.id %}">{{ ingredient.name }}</a>
+                </li>
+                {% endfor %}
+        </ul> -->
+        <h2>Ингредиенты</h2>
+        <a href="{% url 'ingredient' %}" class="item-button">Добавить</a></td>
+        <table class="w3-table w3-bordered" style="width: 600px; padding-left: 16px; margin-bottom: 30px;">
+            <tr class="w3-light-blue"><th>Название</th><th class="w3-center">
+            {% for ingredient in  ingredients_list%}
+            <tr>
+                <td>{{ingredient}}</td>
+                <td class="w3-center"><a href="{% url 'ingredient_edit' ingredient.id %}" class="item-button">Редактировать</a></td>
+                <td class="w3-center"><a href="{% url 'ingredient_delete' ingredient.id %}" class="item-button">Удалить</a></td>
+            </tr>
+            {% empty %}
+            <tr><td>Список ингредиентов пуст..</td></tr>
+            {% endfor %}
+        </table>
+    </main>
+    {% include "blocks/footer.html" %}
+</body>
+</html>
